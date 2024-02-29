@@ -19,7 +19,8 @@
 		"pg-hstore": "^2.3.4",
 		"reflect-metadata": "^0.2.1",
 		"sequelize": "^6.37.1",
-		"sequelize-typescript": "^2.1.6"
+		"sequelize-typescript": "^2.1.6",
+		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.5.3",
