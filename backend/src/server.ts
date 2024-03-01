@@ -4,7 +4,7 @@ import db from "./database/db";
 const start = async () => {
 	try {
 		console.log("Connecting to database...");
-		await db.sync({ alter: true });
+		await db.sync();
 		app.listen(3000, () => {
 			console.log(`Server is running on port ${3000}`);
 		});

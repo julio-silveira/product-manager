@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const simpleProductSchema = z.object({
+export const simpleProductSchema = z.object({
 	name: z.string(),
 	brand: z.string(),
 	model: z.string(),
@@ -50,21 +50,13 @@ const multipleColorSchema = z
 	});
 
 export const createProductSchema = z.object({
-	body: simpleProductSchema
-		.transform((data) => [data])
-		.or(detailedProductSchema.transform((data) => [data]))
-		.or(z.array(multipleColorSchema).transform((data) => data.flat())),
-});
-
-export const updateProductSchema = z.object({
-	body: simpleProductSchema.partial(),
-	params: z.object({
-		id: z.string().transform(Number),
-	}),
+	body: z.union([
+		simpleProductSchema.transform((data) => [data]),
+		detailedProductSchema.transform((data) => [data]),
+		z.array(multipleColorSchema).transform((data) => data.flat()),
+	]),
 });
 
 export type SimpleProductSchema = z.infer<typeof simpleProductSchema>;
 
-export type CreateProductSchema = z.infer<typeof createProductSchema>;
-
-export type UpdateProductSchema = z.output<typeof updateProductSchema>;
+export type CreateProductSchema = z.output<typeof createProductSchema>;

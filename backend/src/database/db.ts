@@ -16,6 +16,7 @@ const sequelize = new Sequelize({
 		},
 	},
 	models: [Products],
+	logging: false,
 });
 
 export default sequelize;

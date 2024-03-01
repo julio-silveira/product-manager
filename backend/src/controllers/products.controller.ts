@@ -2,19 +2,50 @@ import { Request, Response } from "express";
 import ProductsService from "../services/products.service";
 import { NotFoundError } from "../errors/NotFoundError";
 import { zodParser } from "../utils/zodParser";
-import {
-	createProductSchema,
-	updateProductSchema,
-} from "../schemas/product.schemas";
+import { createProductSchema, updateProductSchema } from "../schemas";
+import { BadRequestError } from "../errors/BadRequestError";
 
 export default class ProductsController {
 	constructor(private productsService: ProductsService) {}
 
 	create = async (req: Request, res: Response) => {
 		const parsedReq = await zodParser(createProductSchema, req);
-		const product = await this.productsService.create(parsedReq.body);
 
-		res.status(201).json(product);
+		const validatedProducts = await this.productsService.validateProducts(
+			parsedReq.body,
+		);
+
+		if (validatedProducts.newProducts.length === 0) {
+			throw new BadRequestError("All products already exist");
+		}
+
+		const product = await this.productsService.create(
+			validatedProducts.newProducts,
+		);
+
+		const notCreated = validatedProducts.alreadyExists.map((product) => {
+			return {
+				added: false,
+				error: "Product already exists",
+				brand: product.brand,
+				model: product.model,
+				color: product.color,
+			};
+		});
+
+		const created = product.map((product) => {
+			return {
+				added: true,
+				brand: product.brand,
+				model: product.model,
+				color: product.color,
+			};
+		});
+
+		res.status(201).json({
+			success: true,
+			products: [...created, ...notCreated],
+		});
 	};
 
 	getOne = async (req: Request, res: Response) => {
@@ -40,6 +71,13 @@ export default class ProductsController {
 			params: { id },
 			body,
 		} = parsedReq;
+
+		const dbProduct = await this.productsService.getOne(Number(id));
+
+		if (!dbProduct) {
+			throw new NotFoundError(`Product with id ${id} not found`);
+		}
+
 		const product = await this.productsService.update(Number(id), body);
 
 		if (!product) {

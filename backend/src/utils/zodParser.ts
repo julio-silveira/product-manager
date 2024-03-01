@@ -8,20 +8,15 @@ export async function zodParser<T extends AnyZodObject>(
 	req: Request,
 ): Promise<z.infer<T>> {
 	try {
-		return schema.parseAsync(req);
+		const parsedData = await schema.parseAsync(req);
+		return parsedData;
 	} catch (error) {
 		if (error instanceof ZodError) {
-			const parsedErrors = error.errors.map((err: z.ZodIssue) => ({
-				field: err.path.join("."),
-				message: err.message,
-				errorCode: err.code.toUpperCase(),
-			}));
-
 			throw new BaseError({
 				message: "Validation failed",
 				statusCode: statusCodes.UNPROCESSABLE_ENTITY,
 				errorCode: "validation_error",
-				error: { errors: parsedErrors },
+				error: { errors: error.errors },
 			});
 		}
 		throw new BaseError({
