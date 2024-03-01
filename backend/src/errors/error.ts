@@ -10,7 +10,7 @@ export interface BaseErrorType extends Error {
 export class BaseError extends Error {
 	public statusCode: StatusCodes;
 	public errorCode: string;
-	public error: Record<string, unknown>;
+	public error?: Record<string, unknown>;
 
 	constructor({
 		message,
@@ -21,7 +21,7 @@ export class BaseError extends Error {
 		message: string;
 		statusCode: StatusCodes;
 		errorCode: string;
-		error: Record<string, unknown>;
+		error?: Record<string, unknown>;
 	}) {
 		super(message);
 		this.statusCode = statusCode;
