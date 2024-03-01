@@ -8,17 +8,24 @@ export interface BaseErrorType extends Error {
 }
 
 export class BaseError extends Error {
-	constructor(
-		public message: string,
-		public statusCode: StatusCodes,
-		public errorCode: string,
-		public error: Record<string, unknown> = {},
-	) {
+	public statusCode: StatusCodes;
+	public errorCode: string;
+	public error: Record<string, unknown>;
+
+	constructor({
+		message,
+		statusCode,
+		errorCode,
+		error,
+	}: {
+		message: string;
+		statusCode: StatusCodes;
+		errorCode: string;
+		error: Record<string, unknown>;
+	}) {
 		super(message);
-		Object.assign(this, {
-			statusCode,
-			errorCode,
-			error,
-		});
+		this.statusCode = statusCode;
+		this.errorCode = errorCode;
+		this.error = error;
 	}
 }
