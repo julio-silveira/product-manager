@@ -56,10 +56,15 @@ export const createProductSchema = z.object({
 		.or(z.array(multipleColorSchema).transform((data) => data.flat())),
 });
 
+export const updateProductSchema = z.object({
+	body: simpleProductSchema.partial(),
+	params: z.object({
+		id: z.string().transform(Number),
+	}),
+});
+
 export type SimpleProductSchema = z.infer<typeof simpleProductSchema>;
 
-export type DetailedProductSchema = z.output<typeof detailedProductSchema>;
-
-export type MultipleColorSchema = z.output<typeof multipleColorSchema>;
-
 export type CreateProductSchema = z.infer<typeof createProductSchema>;
+
+export type UpdateProductSchema = z.output<typeof updateProductSchema>;

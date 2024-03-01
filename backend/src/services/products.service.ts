@@ -16,4 +16,8 @@ export default class ProductsService {
 	async getOne(id: number) {
 		return this.model.findByPk(id);
 	}
+
+	async update(id: number, data: Partial<SimpleProductSchema>) {
+		return this.model.update(data, { where: { id } });
+	}
 }
