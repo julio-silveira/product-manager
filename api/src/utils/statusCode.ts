@@ -7,6 +7,8 @@ const statusCodes = {
 	FORBIDDEN: 403,
 	NOT_FOUND: 404,
 	INTERNAL_SERVER_ERROR: 500,
-};
+} as const;
+
+export type StatusCodes = (typeof statusCodes)[keyof typeof statusCodes];
 
 export default statusCodes;

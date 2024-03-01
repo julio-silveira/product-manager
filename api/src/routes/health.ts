@@ -1,9 +1,9 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import statusCodes from "../utils/statusCode";
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", (req: Request, res: Response) => {
 	const response = {
 		status: "ok",
 	};
