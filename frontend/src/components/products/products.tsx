@@ -1,4 +1,3 @@
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { productsApi } from "@/services";
 
 export default async function Products() {

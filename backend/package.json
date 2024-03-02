@@ -4,8 +4,7 @@
 	"description": "",
 	"main": "server.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "nodemon src/server.ts",
+		"dev": "export NODE_ENV=development && nodemon src/server.ts",
 		"lint": "npx @biomejs/biome check  --apply src ",
 		"build": "tsc -p ."
 	},
@@ -31,6 +30,7 @@
 		"@types/express": "^4.17.21",
 		"@types/jsonwebtoken": "^9.0.6",
 		"@types/node": "^20.11.24",
+		"@types/pg": "^8.11.2",
 		"@types/sequelize": "^4.28.20",
 		"@types/validator": "^13.11.9",
 		"nodemon": "^3.1.0",

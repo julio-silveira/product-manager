@@ -1,12 +1,8 @@
-import { create } from "domain";
-import Products from "../database/models/products.model";
+import Products from "../database/models/Products.model";
 import { SimpleProductSchema } from "../schemas/products/create-product.schemas";
-import { ProductHashMap, ProductUniqueParams } from "../schemas";
 import { Op } from "sequelize";
 
 export default class ProductsService {
-	private model = Products;
-
 	async validateProducts(data: SimpleProductSchema[]) {
 		const receivedProductNames = [];
 		const receivedProductKeys = [];
@@ -46,11 +42,11 @@ export default class ProductsService {
 	}
 
 	async create(data: SimpleProductSchema[]) {
-		return this.model.bulkCreate(data);
+		return Products.bulkCreate(data);
 	}
 
 	async getByNames(names: string[]) {
-		const foundProducts = await this.model.findAll({ where: { name: names } });
+		const foundProducts = await Products.findAll({ where: { name: names } });
 
 		const foundProductsNames = foundProducts.map((product) => product.name);
 		return foundProductsNames;
@@ -63,7 +59,7 @@ export default class ProductsService {
 			color: string;
 		}[],
 	) {
-		const foundProducts = await this.model.findAll({
+		const foundProducts = await Products.findAll({
 			where: { [Op.and]: data },
 		});
 
@@ -75,14 +71,14 @@ export default class ProductsService {
 	}
 
 	async getAll() {
-		return this.model.findAll();
+		return Products.findAll();
 	}
 
 	async getOne(id: number) {
-		return this.model.findByPk(id);
+		return Products.findByPk(id);
 	}
 
 	async update(id: number, data: Partial<SimpleProductSchema>) {
-		return this.model.update(data, { where: { id } });
+		return Products.update(data, { where: { id } });
 	}
 }

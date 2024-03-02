@@ -1,9 +1,9 @@
 import { create } from "domain";
-import Products from "../database/models/products.model";
+import Products from "../database/models/Products.model";
 import { SimpleProductSchema } from "../schemas/products/create-product.schemas";
 import { ProductHashMap, ProductUniqueParams } from "../schemas";
 import { Op } from "sequelize";
-import Users from "../database/models/users.model";
+import Users from "../database/models/Users.model";
 
 export default class UsersService {
 	private model = Users;

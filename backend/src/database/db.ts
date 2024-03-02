@@ -1,23 +1,27 @@
 import { Sequelize } from "sequelize-typescript";
+import * as pg from "pg";
 import env from "../config/env";
-import Products from "./models/products.model";
-import Users from "./models/users.model";
+import Products from "./models/Products.model";
+import Users from "./models/Users.model";
 
-const sequelize = new Sequelize({
-	dialect: "postgres",
-	host: env.DATABASE.HOST,
-	port: env.DATABASE.PORT,
-	username: env.DATABASE.USER,
-	password: env.DATABASE.PASSWORD,
-	database: env.DATABASE.DATABASE,
-	dialectOptions: {
-		ssl: {
-			require: true,
-			rejectUnauthorized: false,
+export async function loadDatabase() {
+	const sequelize = new Sequelize({
+		dialect: "postgres",
+		dialectModule: pg,
+		host: env.DATABASE.HOST,
+		port: env.DATABASE.PORT,
+		username: env.DATABASE.USER,
+		password: env.DATABASE.PASSWORD,
+		database: env.DATABASE.DATABASE,
+		dialectOptions: {
+			ssl: {
+				require: true,
+				rejectUnauthorized: false,
+			},
 		},
-	},
-	models: [Products, Users],
-	logging: false,
-});
-
-export default sequelize;
+		models: [Products, Users],
+		logging: false,
+	});
+	await sequelize.authenticate();
+	return sequelize;
+}

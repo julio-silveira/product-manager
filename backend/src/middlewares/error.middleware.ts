@@ -7,6 +7,16 @@ const errorMiddleware = (
 	res: Response,
 	next: NextFunction,
 ) => {
+	const openDbInstance = res.locals.sequelize;
+
+	if (openDbInstance) {
+		try {
+			openDbInstance.close();
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	if (error instanceof BaseError) {
 		return res.status(error.statusCode).json({
 			message: error.message,
