@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import env from "../config/env";
-import Products from "./models/Products";
+import Products from "./models/products.model";
+import Users from "./models/users.model";
 
 const sequelize = new Sequelize({
 	dialect: "postgres",
@@ -15,7 +16,7 @@ const sequelize = new Sequelize({
 			rejectUnauthorized: false,
 		},
 	},
-	models: [Products],
+	models: [Products, Users],
 	logging: false,
 });
 

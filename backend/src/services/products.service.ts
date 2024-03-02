@@ -1,5 +1,5 @@
 import { create } from "domain";
-import Products from "../database/models/Products";
+import Products from "../database/models/products.model";
 import { SimpleProductSchema } from "../schemas/products/create-product.schemas";
 import { ProductHashMap, ProductUniqueParams } from "../schemas";
 import { Op } from "sequelize";
@@ -22,9 +22,6 @@ export default class ProductsService {
 
 		const foundProductNames = await this.getByNames(receivedProductNames);
 		const foundProductKeys = await this.getByProductData(receivedProductKeys);
-
-		console.log(foundProductNames);
-		console.log(foundProductKeys);
 
 		const newProducts = [];
 		const alreadyExists = [];
