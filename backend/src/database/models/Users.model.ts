@@ -1,5 +1,6 @@
 import { Optional } from "sequelize";
 import { Column, Table, Model } from "sequelize-typescript";
+import db from "../db";
 
 interface UserAttributes {
 	id: number;
@@ -21,5 +22,7 @@ class Users extends Model<UserAttributes, UserCreationAttributes> {
 	@Column
 	password!: string;
 }
+
+db.addModels([Users]);
 
 export default Users;
