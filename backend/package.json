@@ -4,7 +4,6 @@
 	"description": "",
 	"main": "server.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "nodemon src/server.ts",
 		"lint": "npx @biomejs/biome check  --apply src ",
 		"build": "tsc -p ."
