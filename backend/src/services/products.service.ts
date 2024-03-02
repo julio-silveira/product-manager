@@ -1,7 +1,5 @@
-import { create } from "domain";
-import Products from "../database/models/products.model";
+import Products from "../database/models/Products.model";
 import { SimpleProductSchema } from "../schemas/products/create-product.schemas";
-import { ProductHashMap, ProductUniqueParams } from "../schemas";
 import { Op } from "sequelize";
 
 export default class ProductsService {

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import Products from "../database/models/products.model";
+import Products from "../database/models/Products.model";
 
 export default class JwtService {
 	token: string;
