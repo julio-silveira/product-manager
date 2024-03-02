@@ -15,7 +15,12 @@ const SECRETS = {
 	JWT_EXPIRATION: process.env.JWT_EXPIRATION || "1h",
 };
 
+const PORTS = {
+	API_PORT: process.env.PORT || 3000,
+};
+
 export default {
 	DATABASE,
 	SECRETS,
+	PORTS,
 };

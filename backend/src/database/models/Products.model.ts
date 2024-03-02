@@ -1,6 +1,5 @@
 import { Optional } from "sequelize";
 import { Table, Model, Column } from "sequelize-typescript";
-import db from "../db";
 
 interface ProductAtributes {
 	id: number;
@@ -30,7 +29,5 @@ class Products extends Model<ProductAtributes, ProductCreationAttributes> {
 	@Column
 	color!: string;
 }
-
-db.addModels([Products]);
 
 export default Products;

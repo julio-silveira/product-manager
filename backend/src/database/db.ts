@@ -16,7 +16,8 @@ const sequelize = new Sequelize({
 			rejectUnauthorized: false,
 		},
 	},
-	logging: false,
+	models: [Products, Users],
+	// logging: false,
 });
 
 export default sequelize;
