@@ -9,7 +9,6 @@ const app = express();
 app.use(express.json());
 app.use(middlewares.connection.open);
 app.use(routes);
-app.use(middlewares.connection.close);
 
 app.use(middlewares.error);
 export default app;
