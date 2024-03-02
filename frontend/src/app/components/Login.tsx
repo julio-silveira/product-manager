@@ -16,6 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { LoginFormSchema, LoginFormValues } from "@/services/http";
 import useAuthStore from "@/stores/auth.store";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { useEffect } from "react";
 
 export default function Login() {
 	const { toast } = useToast();
