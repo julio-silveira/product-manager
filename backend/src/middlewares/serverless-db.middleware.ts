@@ -15,7 +15,7 @@ export const initDb = async (
 	try {
 		const hasConnectionOpen = req.app.locals.sequelize;
 		if (!hasConnectionOpen) {
-			console.info("Openig database connection");
+			console.info("Opening database connection");
 			req.app.locals.sequelize = await loadDatabase();
 			console.info("Database connection opened");
 		}
