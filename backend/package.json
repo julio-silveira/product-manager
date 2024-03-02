@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "export NODE_ENV=development && nodemon src/server.ts",
 		"lint": "npx @biomejs/biome check  --apply src ",
-		"build": "tsc -p . && npm install -g pg"
+		"build": "tsc -p ."
 	},
 	"keywords": [],
 	"author": "",
