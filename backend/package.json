@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "server.ts",
 	"scripts": {
-		"dev": "nodemon src/server.ts",
+		"dev": "export NODE_ENV=development && nodemon src/server.ts",
 		"lint": "npx @biomejs/biome check  --apply src ",
 		"build": "tsc -p . && npm install pg --save"
 	},

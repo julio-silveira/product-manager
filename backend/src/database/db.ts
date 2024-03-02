@@ -1,12 +1,11 @@
 import { Sequelize } from "sequelize-typescript";
-import * as pg from "pg";
 import env from "../config/env";
 import Products from "./models/Products.model";
 import Users from "./models/Users.model";
 
 export async function loadDatabase() {
 	const sequelize = new Sequelize({
-		dialectModule: pg,
+		dialect: "postgres",
 		host: env.DATABASE.HOST,
 		port: env.DATABASE.PORT,
 		username: env.DATABASE.USER,
@@ -19,7 +18,7 @@ export async function loadDatabase() {
 			},
 		},
 		models: [Products, Users],
-		// logging: false,
+		logging: false,
 	});
 	await sequelize.authenticate();
 	return sequelize;
