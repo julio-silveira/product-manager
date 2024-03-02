@@ -9,7 +9,7 @@ const controller = new ProductsController(new ProductsService());
 
 router.get("/:id", middlewares.auth, controller.getOne);
 
-router.get("/", controller.getAll);
+router.get("/", middlewares.syncDb, controller.getAll);
 
 router.post("/", middlewares.auth, controller.create);
 

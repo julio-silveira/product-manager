@@ -1,3 +1,4 @@
 import auth from "./auth.middleware";
 import error from "./error.middleware";
-export default { auth, error };
+import syncDb from "./init-db.middleware";
+export default { auth, error, syncDb };
