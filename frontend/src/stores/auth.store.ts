@@ -1,5 +1,5 @@
 import { LoginFormValues, authApi } from "@/services/http";
-import { createSessionCookies, removeSessionCookies } from "@/utils";
+import { createSessionCookies, getToken, removeSessionCookies } from "@/utils";
 import { AxiosError } from "axios";
 import { create } from "zustand";
 
@@ -17,9 +17,10 @@ type LoginResult = {
 type AuthActions = {
 	login: (params: LoginFormValues) => Promise<LoginResult>;
 	logout: () => void;
+	checkAuth: () => void;
 };
 
-const useAuthStore = create<User & AuthActions>((set) => ({
+const useAuthStore = create<User & AuthActions>((set, get) => ({
 	token: null,
 	isLoading: false,
 	isAuthenticated: false,
@@ -27,7 +28,6 @@ const useAuthStore = create<User & AuthActions>((set) => ({
 		set({ isLoading: true });
 		try {
 			const result = await authApi.login(data);
-			set({ token: result.token, isAuthenticated: true });
 			createSessionCookies({ token: result.token });
 			const message = result.message || "Logged in successfully";
 
@@ -39,7 +39,6 @@ const useAuthStore = create<User & AuthActions>((set) => ({
 			return loginResult;
 		} catch (error) {
 			removeSessionCookies();
-			set({ token: null, isAuthenticated: false });
 			const e = error as AxiosError<{ message: string }>;
 			const result = {
 				message: e.response?.data.message || "Failed to login",
@@ -47,6 +46,16 @@ const useAuthStore = create<User & AuthActions>((set) => ({
 			};
 			set({ isLoading: false });
 			return result;
+		} finally {
+			get().checkAuth();
+		}
+	},
+	checkAuth: () => {
+		const token = getToken();
+		if (token) {
+			set({ token, isAuthenticated: true });
+		} else {
+			set({ token: null, isAuthenticated: false });
 		}
 	},
 	logout: () => {

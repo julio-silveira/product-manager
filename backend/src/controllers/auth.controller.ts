@@ -9,7 +9,6 @@ export class AuthController {
 
 	login = async (req: Request, res: Response) => {
 		const { body } = await zodParser(loginRequestSchema, req);
-		console.log(body);
 		const token = await this.authService.login(body);
 
 		res.json({
