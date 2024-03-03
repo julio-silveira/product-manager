@@ -16,7 +16,12 @@ export default class ProductsController {
 		);
 
 		if (validatedProducts.newProducts.length === 0) {
-			throw new BadRequestError("All products already exist");
+			const message =
+				validatedProducts.alreadyExists.length > 1
+					? "All products already exists."
+					: "Product already exists.";
+
+			throw new BadRequestError(message);
 		}
 
 		const product = await this.productsService.create(

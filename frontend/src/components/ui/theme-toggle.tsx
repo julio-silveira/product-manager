@@ -12,11 +12,7 @@ export function ThemeToggle() {
 	const isDark = theme === "dark";
 
 	return (
-		<Button
-			onClick={() => setTheme(isDark ? "light" : "dark")}
-			variant="outline"
-			size="icon"
-		>
+		<Button onClick={() => setTheme(isDark ? "light" : "dark")} size="icon">
 			{isDark ? <SunIcon /> : <MoonIcon />}
 		</Button>
 	);
