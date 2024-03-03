@@ -29,8 +29,8 @@ import { useEffect, useState } from "react";
 import { productsApi } from "@/services";
 import { useToast } from "@/components/ui/use-toast";
 import { LoadingButton } from "@/components/ui/loading-button";
-import revalidateProducts from "../actions";
 import { Pencil2Icon } from "@radix-ui/react-icons";
+import useProductStore from "@/stores/products.store";
 
 type Props = {
 	id: number;
@@ -39,6 +39,7 @@ type Props = {
 
 export function EditProductModal({ id, product }: Props) {
 	const { toast } = useToast();
+	const fetchProducts = useProductStore((state) => state.fetchProducts);
 	const form = useForm<CreateOrUpdateProductValues>({
 		resolver: zodResolver(CreateOrUpdateProductSchema),
 		defaultValues: product,
@@ -84,7 +85,7 @@ export function EditProductModal({ id, product }: Props) {
 		});
 
 		if (success) {
-			revalidateProducts();
+			fetchProducts();
 			handleCloseDialog();
 		}
 

@@ -29,11 +29,12 @@ import { useState } from "react";
 import { productsApi } from "@/services";
 import { useToast } from "@/components/ui/use-toast";
 import { LoadingButton } from "@/components/ui/loading-button";
-import revalidateProducts from "../actions";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
+import useProductStore from "@/stores/products.store";
 
 export function CreateProductModal() {
 	const { toast } = useToast();
+	const fetchProducts = useProductStore((state) => state.fetchProducts);
 	const form = useForm<CreateOrUpdateProductValues>({
 		resolver: zodResolver(CreateOrUpdateProductSchema),
 		defaultValues: {
@@ -58,6 +59,7 @@ export function CreateProductModal() {
 
 	const handleCloseDialog = () => {
 		if (isLoading) {
+			fetchProducts();
 			handleRenderCloseToastError();
 			return;
 		}
@@ -85,7 +87,6 @@ export function CreateProductModal() {
 		});
 
 		if (success) {
-			revalidateProducts();
 			handleCloseDialog();
 		}
 
