@@ -25,24 +25,23 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { productsApi } from "@/services";
 import { useToast } from "@/components/ui/use-toast";
 import { LoadingButton } from "@/components/ui/loading-button";
 import revalidateProducts from "../actions";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { Pencil2Icon } from "@radix-ui/react-icons";
 
-export function CreateProductModal() {
+type Props = {
+	id: number;
+	product: CreateOrUpdateProductValues;
+};
+
+export function EditProductModal({ id, product }: Props) {
 	const { toast } = useToast();
 	const form = useForm<CreateOrUpdateProductValues>({
 		resolver: zodResolver(CreateOrUpdateProductSchema),
-		defaultValues: {
-			name: "",
-			brand: "",
-			model: "",
-			color: "",
-			price: 0,
-		},
+		defaultValues: product,
 	});
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -76,7 +75,7 @@ export function CreateProductModal() {
 
 	async function onSubmit(data: CreateOrUpdateProductValues) {
 		setIsLoading(true);
-		const { message, success } = await productsApi.create(data);
+		const { message, success } = await productsApi.update(id, data);
 
 		toast({
 			title: success ? "Success" : "Error",
@@ -92,11 +91,15 @@ export function CreateProductModal() {
 		setIsLoading(false);
 	}
 
+	useEffect(() => {
+		form.reset(product);
+	}, [form, product]);
+
 	return (
 		<Dialog open={isOpen} onOpenChange={handleToggleDialog}>
 			<DialogTrigger asChild>
 				<Button size="icon">
-					<PlusCircledIcon />
+					<Pencil2Icon />
 				</Button>
 			</DialogTrigger>
 
@@ -104,10 +107,8 @@ export function CreateProductModal() {
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)}>
 						<DialogHeader>
-							<DialogTitle>Create a new product</DialogTitle>
-							<DialogDescription>
-								Fill in the form to create a new product
-							</DialogDescription>
+							<DialogTitle>Update product</DialogTitle>
+							<DialogDescription>Update the product details</DialogDescription>
 						</DialogHeader>
 						<div className="grid gap-4 py-4">
 							<FormField
@@ -133,7 +134,6 @@ export function CreateProductModal() {
 										<FormControl>
 											<Input disabled={isLoading} {...field} />
 										</FormControl>
-										<FormMessage />
 									</FormItem>
 								)}
 							/>
@@ -188,7 +188,7 @@ export function CreateProductModal() {
 								disabled={isLoading}
 								type="submit"
 							>
-								Create
+								Update
 							</LoadingButton>
 						</DialogFooter>
 					</form>

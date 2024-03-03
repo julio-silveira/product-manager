@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { api } from "../../api";
-import { ProductResponse, CreateProductValues, Product } from "./types";
+import { ProductResponse, CreateOrUpdateProductValues, Product } from "./types";
 
 const COMMON_PATH = "/products";
 
@@ -10,7 +10,7 @@ const getAll = async (): Promise<Product[]> => {
 };
 
 const create = async (
-	product: CreateProductValues,
+	product: CreateOrUpdateProductValues,
 ): Promise<ProductResponse> => {
 	try {
 		const { data } = await api.post(`${COMMON_PATH}`, product);
@@ -19,6 +19,22 @@ const create = async (
 	} catch (e) {
 		const err = e as AxiosError<{ message: string }>;
 		const message = err?.response?.data?.message || "Failed to create product";
+
+		return { message, success: false };
+	}
+};
+
+const update = async (
+	id: number,
+	product: CreateOrUpdateProductValues,
+): Promise<ProductResponse> => {
+	try {
+		const { data } = await api.put(`${COMMON_PATH}/${id}`, product);
+		const message = data.message || "Product updated successfully";
+		return { message, success: true };
+	} catch (e) {
+		const err = e as AxiosError<{ message: string }>;
+		const message = err?.response?.data?.message || "Failed to update product";
 
 		return { message, success: false };
 	}
@@ -43,6 +59,7 @@ const del = async (id: number): Promise<ProductResponse> => {
 const productsApi = {
 	getAll,
 	create,
+	update,
 	del,
 };
 

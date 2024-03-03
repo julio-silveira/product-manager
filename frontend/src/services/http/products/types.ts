@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const CreateProductSchema = z.object({
+export const CreateOrUpdateProductSchema = z.object({
 	name: z.string().min(3, { message: "Name must be at least 3 characters" }),
 	brand: z.string().min(3, { message: "Brand must be at least 3 characters" }),
 	model: z.string().min(3, { message: "Model must be at least 3 characters" }),
@@ -8,7 +8,9 @@ export const CreateProductSchema = z.object({
 	color: z.string().min(3, { message: "Color must be at least 3 characters" }),
 });
 
-export type CreateProductValues = z.infer<typeof CreateProductSchema>;
+export type CreateOrUpdateProductValues = z.infer<
+	typeof CreateOrUpdateProductSchema
+>;
 
 export type ProductResponse = {
 	message: string;
