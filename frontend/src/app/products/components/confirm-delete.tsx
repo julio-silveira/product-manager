@@ -16,8 +16,8 @@ import { useState } from "react";
 import { productsApi } from "@/services";
 import { useToast } from "@/components/ui/use-toast";
 import { LoadingButton } from "@/components/ui/loading-button";
-import revalidateProducts from "../actions";
 import { TrashIcon } from "@radix-ui/react-icons";
+import useProductStore from "@/stores/products.store";
 
 type Props = {
 	id: number;
@@ -25,7 +25,7 @@ type Props = {
 
 export function ConfirmDelete({ id }: Props) {
 	const { toast } = useToast();
-
+	const fetchProducts = useProductStore((state) => state.fetchProducts);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -65,7 +65,7 @@ export function ConfirmDelete({ id }: Props) {
 		});
 
 		if (success) {
-			revalidateProducts();
+			fetchProducts();
 			handleCloseDialog();
 		}
 

@@ -2,10 +2,12 @@
 
 import useAuthStore from "@/stores/auth.store";
 import { Button } from "../ui/button";
-import { ThemeToggle } from "../ui/theme-toggle";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ExitIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
+
+const ThemeToggle = dynamic(() => import("../ui/theme-toggle"));
 
 type HeaderProps = {
 	title: string;

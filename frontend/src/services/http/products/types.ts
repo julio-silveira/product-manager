@@ -12,6 +12,24 @@ export type CreateOrUpdateProductValues = z.infer<
 	typeof CreateOrUpdateProductSchema
 >;
 
+export const GetProductsFilterShcema = z
+	.object({
+		name: z.string().optional(),
+		brand: z.string().optional(),
+		model: z.string().optional(),
+		price: z.string().optional(),
+		color: z.string().optional(),
+	})
+	.transform((data) => ({
+		name: data.name || undefined,
+		brand: data.brand || undefined,
+		model: data.model || undefined,
+		price: data.price || undefined,
+		color: data.color || undefined,
+	}));
+
+export type GetProductsFilter = z.output<typeof GetProductsFilterShcema>;
+
 export type ProductResponse = {
 	message: string;
 	success: boolean;

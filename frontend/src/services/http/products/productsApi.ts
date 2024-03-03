@@ -1,11 +1,16 @@
 import { AxiosError } from "axios";
 import { api } from "../../api";
-import { ProductResponse, CreateOrUpdateProductValues, Product } from "./types";
+import {
+	ProductResponse,
+	CreateOrUpdateProductValues,
+	Product,
+	GetProductsFilter,
+} from "./types";
 
 const COMMON_PATH = "/products";
 
-const getAll = async (): Promise<Product[]> => {
-	const { data } = await api.get(`${COMMON_PATH}`);
+const getAll = async (params?: GetProductsFilter): Promise<Product[]> => {
+	const { data } = await api.get(`${COMMON_PATH}`, { params });
 	return data;
 };
 
