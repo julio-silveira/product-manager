@@ -1,9 +1,11 @@
-import Products from "@/components/products/products";
+import { CreateProductModal } from "./components/create-product-modal";
+import ProductsGrid from "./components/products-grid";
 
 export default function Home() {
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-center">
-			<Products />
-		</main>
+		<>
+			<CreateProductModal />
+			<ProductsGrid />
+		</>
 	);
 }
