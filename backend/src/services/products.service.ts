@@ -81,4 +81,8 @@ export default class ProductsService {
 	async update(id: number, data: Partial<SimpleProductSchema>) {
 		return Products.update(data, { where: { id } });
 	}
+
+	async delete(id: number) {
+		return Products.destroy({ where: { id } });
+	}
 }

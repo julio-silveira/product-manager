@@ -4,6 +4,7 @@ import { NotFoundError } from "../errors/NotFoundError";
 import { zodParser } from "../utils/zodParser";
 import { createProductSchema, updateProductSchema } from "../schemas";
 import { BadRequestError } from "../errors/BadRequestError";
+import statusCodes from "../utils/statusCode";
 
 export default class ProductsController {
 	constructor(private productsService: ProductsService) {}
@@ -47,7 +48,7 @@ export default class ProductsController {
 			};
 		});
 
-		res.status(201).json({
+		return res.status(statusCodes.CREATED).json({
 			success: true,
 			products: [...created, ...notCreated],
 		});
@@ -61,13 +62,13 @@ export default class ProductsController {
 			throw new NotFoundError(`Product with id ${id} not found`);
 		}
 
-		res.status(200).json(product);
+		return res.status(statusCodes.OK).json(product);
 	};
 
 	getAll = async (req: Request, res: Response) => {
 		const products = await this.productsService.getAll();
 
-		res.status(200).json(products);
+		return res.status(statusCodes.OK).json(products);
 	};
 
 	update = async (req: Request, res: Response) => {
@@ -89,6 +90,19 @@ export default class ProductsController {
 			throw new NotFoundError(`Product with id ${id} not found`);
 		}
 
-		res.status(200).json(product);
+		return res.status(statusCodes.OK).json(product);
+	};
+
+	delete = async (req: Request, res: Response) => {
+		const { id } = req.params;
+		const product = await this.productsService.getOne(Number(id));
+
+		if (!product) {
+			throw new NotFoundError(`Product with id ${id} not found`);
+		}
+
+		await this.productsService.delete(Number(id));
+
+		return res.status(statusCodes.NO_CONTENT).send();
 	};
 }

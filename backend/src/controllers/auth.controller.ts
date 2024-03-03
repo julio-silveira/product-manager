@@ -3,6 +3,7 @@ import { loginRequestSchema } from "../schemas/login/login.schema";
 import AuthService from "../services/auth.service";
 import { zodParser } from "../utils/zodParser";
 import { createUserSchema } from "../schemas";
+import statusCodes from "../utils/statusCode";
 
 export class AuthController {
 	constructor(private authService: AuthService) {}
@@ -11,7 +12,7 @@ export class AuthController {
 		const { body } = await zodParser(loginRequestSchema, req);
 		const token = await this.authService.login(body);
 
-		res.json({
+		res.status(statusCodes.OK).json({
 			message: "Logged in successfully",
 			token,
 		});
@@ -22,7 +23,7 @@ export class AuthController {
 
 		const token = await this.authService.register(body);
 
-		res.status(201).json({
+		res.status(statusCodes.CREATED).json({
 			message: "User created successfully",
 			token,
 		});
