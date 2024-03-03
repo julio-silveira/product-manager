@@ -4,7 +4,7 @@ import { create } from "zustand";
 type ProductStore = {
 	products: Product[];
 	isLoading: boolean;
-	fetchProducts: () => void;
+	fetchProducts: () => Promise<void>;
 };
 
 const useProductStore = create<ProductStore>((set) => ({

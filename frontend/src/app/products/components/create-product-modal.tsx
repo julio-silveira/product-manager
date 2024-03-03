@@ -87,6 +87,7 @@ export function CreateProductModal() {
 		});
 
 		if (success) {
+			fetchProducts();
 			handleCloseDialog();
 		}
 
@@ -95,9 +96,10 @@ export function CreateProductModal() {
 
 	return (
 		<Dialog open={isOpen} onOpenChange={handleToggleDialog}>
-			<DialogTrigger asChild>
-				<Button size="icon">
+			<DialogTrigger asChild className="flex flex-1">
+				<Button className="flex items-center gap-1 justify-center">
 					<PlusCircledIcon />
+					Create
 				</Button>
 			</DialogTrigger>
 
