@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { api } from "../../api";
-import { CreateProductResponse, CreateProductValues, Product } from "./types";
+import { ProductResponse, CreateProductValues, Product } from "./types";
 
 const COMMON_PATH = "/products";
 
@@ -11,7 +11,7 @@ const getAll = async (): Promise<Product[]> => {
 
 const create = async (
 	product: CreateProductValues,
-): Promise<CreateProductResponse> => {
+): Promise<ProductResponse> => {
 	try {
 		const { data } = await api.post(`${COMMON_PATH}`, product);
 		const message = data.message || "Product created successfully";
@@ -24,12 +24,20 @@ const create = async (
 	}
 };
 
-const del = async (id: string): Promise<void> => {
+const del = async (id: number): Promise<ProductResponse> => {
 	const { status } = await api.delete(`${COMMON_PATH}/${id}`);
 
 	if (status !== 204) {
-		throw new Error("Failed to delete product, please try again later.");
+		return {
+			message: "Failed to delete product, please try again later.",
+			success: false,
+		};
 	}
+
+	return {
+		message: "Product deleted successfully",
+		success: true,
+	};
 };
 
 const productsApi = {

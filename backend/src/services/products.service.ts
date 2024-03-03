@@ -4,20 +4,13 @@ import { Op } from "sequelize";
 
 export default class ProductsService {
 	async validateProducts(data: SimpleProductSchema[]) {
-		const receivedProductNames = [];
-		const receivedProductKeys = [];
+		const productKeys = data.map((product) => ({
+			brand: product.brand,
+			model: product.model,
+			color: product.color,
+		}));
 
-		for (const product of data) {
-			receivedProductNames.push(product.name);
-			receivedProductKeys.push({
-				brand: product.brand,
-				model: product.model,
-				color: product.color,
-			});
-		}
-
-		const foundProductNames = await this.getByNames(receivedProductNames);
-		const foundProductKeys = await this.getByProductData(receivedProductKeys);
+		const foundProductKeys = await this.getByProductData(productKeys);
 
 		const newProducts = [];
 		const alreadyExists = [];
@@ -25,10 +18,7 @@ export default class ProductsService {
 		for (const product of data) {
 			const productKey = `${product.brand}-${product.model}-${product.color}`;
 
-			if (
-				foundProductNames.includes(product.name) ||
-				foundProductKeys.includes(productKey)
-			) {
+			if (foundProductKeys.includes(productKey)) {
 				alreadyExists.push(product);
 			} else {
 				newProducts.push(product);

@@ -10,7 +10,7 @@ export const CreateProductSchema = z.object({
 
 export type CreateProductValues = z.infer<typeof CreateProductSchema>;
 
-export type CreateProductResponse = {
+export type ProductResponse = {
 	message: string;
 	success: boolean;
 };

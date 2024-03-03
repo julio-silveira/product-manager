@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
@@ -13,6 +12,7 @@ import { Product } from "@/services";
 import { currencyFormatter } from "@/utils/formatters";
 import { TrashIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import { CardLabeledText } from "./card-labeled-text";
+import { ConfirmDelete } from "./confirm-delete";
 
 type Props = {
 	product: Product;
@@ -44,9 +44,7 @@ export function ProductCard({ product }: Props) {
 				<Button size="icon">
 					<Pencil2Icon />
 				</Button>
-				<Button size="icon" className="bg-red-500 hover:bg-red-800">
-					<TrashIcon />
-				</Button>
+				<ConfirmDelete id={product.id} />
 			</CardFooter>
 		</Card>
 	);
