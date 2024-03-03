@@ -16,7 +16,6 @@ import { Separator } from "@/components/ui/separator";
 import { LoginFormSchema, LoginFormValues } from "@/services/http";
 import useAuthStore from "@/stores/auth.store";
 import { LoadingButton } from "@/components/ui/loading-button";
-import { useEffect } from "react";
 
 export default function Login() {
 	const { toast } = useToast();
@@ -89,7 +88,7 @@ export default function Login() {
 					<Separator className="w-1/6 lg:w-3/12" />
 				</div>
 				<LoadingButton
-					isLoading={isLoading}
+					isLoading={false}
 					disabled={isLoading}
 					type="button"
 					variant="link"
