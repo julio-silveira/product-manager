@@ -115,7 +115,11 @@ export default function ActionBar() {
 							</FormItem>
 						)}
 					/>
-					<Button type="button" onClick={() => form.reset()}>
+					<Button
+						type="button"
+						disabled={isLoading}
+						onClick={() => form.reset()}
+					>
 						<EraserIcon />
 					</Button>
 

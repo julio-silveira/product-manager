@@ -19,6 +19,20 @@ export default function ProductsGrid() {
 		return <Loader2 className="w-10 h-10 m-auto animate-spin" />;
 	}
 
+	if (products === undefined) {
+		return null;
+	}
+
+	if (products.length === 0) {
+		return (
+			<div className="flex items-center justify-center w-full h-20">
+				<h1 className="text-2xl font-extrabold  lg:text-3xl">
+					No products found!
+				</h1>
+			</div>
+		);
+	}
+
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 overflow-y-scroll max-h-[80vh]">
 			{products.map((product) => (

@@ -35,6 +35,7 @@ import useProductStore from "@/stores/products.store";
 export function CreateProductModal() {
 	const { toast } = useToast();
 	const fetchProducts = useProductStore((state) => state.fetchProducts);
+	const isLoadingProducts = useProductStore((state) => state.isLoading);
 	const form = useForm<CreateOrUpdateProductValues>({
 		resolver: zodResolver(CreateOrUpdateProductSchema),
 		defaultValues: {
@@ -97,7 +98,10 @@ export function CreateProductModal() {
 	return (
 		<Dialog open={isOpen} onOpenChange={handleToggleDialog}>
 			<DialogTrigger asChild className="flex flex-1">
-				<Button className="flex items-center gap-1 justify-center">
+				<Button
+					disabled={isLoadingProducts}
+					className="flex items-center gap-1 justify-center"
+				>
 					<PlusCircledIcon />
 					Create
 				</Button>

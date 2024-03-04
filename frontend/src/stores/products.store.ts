@@ -2,13 +2,13 @@ import { GetProductsFilter, Product, productsApi } from "@/services/http";
 import { create } from "zustand";
 
 type ProductStore = {
-	products: Product[];
+	products: Product[] | undefined;
 	isLoading: boolean;
 	fetchProducts: (params?: GetProductsFilter) => Promise<void>;
 };
 
 const useProductStore = create<ProductStore>((set) => ({
-	products: [],
+	products: undefined,
 	isLoading: false,
 	fetchProducts: async (params) => {
 		set({ isLoading: true });

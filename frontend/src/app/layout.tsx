@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { fontSans } from "./font";
 import { Toaster } from "@/components/ui/toaster";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
 	title: "Product manager",
@@ -28,12 +30,13 @@ export default function RootLayout({
 				>
 					<ThemeProvider
 						attribute="class"
-						defaultTheme="system"
+						defaultTheme="dark"
 						enableSystem
 						disableTransitionOnChange
 					>
 						{children}
 						<Toaster />
+						<ToastContainer theme="dark" />
 					</ThemeProvider>
 				</body>
 			</html>
