@@ -62,7 +62,6 @@ export default class ProductsService {
 			where: { [Op.or]: mappedData },
 		});
 
-		console.log(data);
 		const foundProductsKeys = foundProducts.map((product) => {
 			return `${product.brand}-${product.model}-${product.color}`;
 		});
