@@ -1,6 +1,6 @@
-import Products, { ProductAtributes } from "../database/models/Products.model";
+import Products from "../database/models/Products.model";
 import { SimpleProductSchema } from "../schemas/products/create-product.schemas";
-import { Op, WhereOptions } from "sequelize";
+import { Op } from "sequelize";
 import { GetProductsSchemaType } from "../schemas/products/get-products-schema";
 
 export default class ProductsService {
@@ -111,7 +111,7 @@ export default class ProductsService {
 
 		const where = filters.length > 0 ? { [Op.and]: filters } : {};
 
-		const products = await Products.findAll({ where });
+		const products = await Products.findAll({ where, order: [["id", "ASC"]] });
 		return products;
 	}
 
