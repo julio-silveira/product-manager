@@ -15,4 +15,6 @@ router.post("/", middlewares.auth, controller.create);
 
 router.put("/:id", middlewares.auth, controller.update);
 
+router.delete("/:id", middlewares.auth, controller.delete);
+
 export default router;

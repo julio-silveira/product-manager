@@ -1,7 +1,7 @@
 import { Optional } from "sequelize";
 import { Table, Model, Column } from "sequelize-typescript";
 
-interface ProductAtributes {
+export interface ProductAtributes {
 	id: number;
 	name: string;
 	brand: string;

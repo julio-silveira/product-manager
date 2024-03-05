@@ -1,4 +1,7 @@
+import useAuthStore from "@/stores/auth.store";
 import { getToken } from "@/utils";
+import Router from "next/router";
+
 import {
 	AxiosDefaults,
 	AxiosError,
@@ -6,6 +9,7 @@ import {
 	AxiosResponse,
 	InternalAxiosRequestConfig,
 } from "axios";
+import { toast } from "react-toastify";
 
 type SetAuthorizationHeaderParams = {
 	request: AxiosDefaults | AxiosRequestConfig;
@@ -44,5 +48,13 @@ type ErrorCode = {
 export function onResponseError(
 	error: AxiosError<ErrorCode>,
 ): Promise<AxiosError | AxiosResponse> {
+	if (error.response?.status === 401) {
+		console.error("Unauthorized request");
+		useAuthStore.getState().logout();
+		toast.info("Session expired, please login again", {
+			toastId: "session-expired",
+		});
+		Router.push("/");
+	}
 	return Promise.reject(error);
 }

@@ -1,18 +1,17 @@
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
 import { Product } from "@/services";
 import { currencyFormatter } from "@/utils/formatters";
-import { TrashIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import { CardLabeledText } from "./card-labeled-text";
+import { ConfirmDelete } from "./confirm-delete";
+import { EditProductModal } from "./edit-product-modal";
 
 type Props = {
 	product: Product;
@@ -41,12 +40,8 @@ export function ProductCard({ product }: Props) {
 				</div>
 			</CardContent>
 			<CardFooter className="flex justify-end gap-2">
-				<Button size="icon">
-					<Pencil2Icon />
-				</Button>
-				<Button size="icon" className="bg-red-500 hover:bg-red-800">
-					<TrashIcon />
-				</Button>
+				<EditProductModal product={product} id={product.id} />
+				<ConfirmDelete id={product.id} />
 			</CardFooter>
 		</Card>
 	);

@@ -1,23 +1,17 @@
-import Products from "../database/models/Products.model";
+import Products, { ProductAtributes } from "../database/models/Products.model";
 import { SimpleProductSchema } from "../schemas/products/create-product.schemas";
-import { Op } from "sequelize";
+import { Op, WhereOptions } from "sequelize";
+import { GetProductsSchemaType } from "../schemas/products/get-products-schema";
 
 export default class ProductsService {
 	async validateProducts(data: SimpleProductSchema[]) {
-		const receivedProductNames = [];
-		const receivedProductKeys = [];
+		const productKeys = data.map((product) => ({
+			brand: product.brand,
+			model: product.model,
+			color: product.color,
+		}));
 
-		for (const product of data) {
-			receivedProductNames.push(product.name);
-			receivedProductKeys.push({
-				brand: product.brand,
-				model: product.model,
-				color: product.color,
-			});
-		}
-
-		const foundProductNames = await this.getByNames(receivedProductNames);
-		const foundProductKeys = await this.getByProductData(receivedProductKeys);
+		const foundProductKeys = await this.getByProductData(productKeys);
 
 		const newProducts = [];
 		const alreadyExists = [];
@@ -25,10 +19,7 @@ export default class ProductsService {
 		for (const product of data) {
 			const productKey = `${product.brand}-${product.model}-${product.color}`;
 
-			if (
-				foundProductNames.includes(product.name) ||
-				foundProductKeys.includes(productKey)
-			) {
+			if (foundProductKeys.includes(productKey)) {
 				alreadyExists.push(product);
 			} else {
 				newProducts.push(product);
@@ -70,8 +61,50 @@ export default class ProductsService {
 		return foundProductsKeys;
 	}
 
-	async getAll() {
-		return Products.findAll();
+	async getAll(params: GetProductsSchemaType) {
+		const filters = [];
+		if (params.name) {
+			filters.push({
+				name: {
+					[Op.iLike]: `%${params.name}%`,
+				},
+			});
+		}
+
+		if (params.brand) {
+			filters.push({
+				brand: {
+					[Op.iLike]: `%${params.brand}%`,
+				},
+			});
+		}
+
+		if (params.model) {
+			filters.push({
+				model: {
+					[Op.iLike]: `%${params.model}%`,
+				},
+			});
+		}
+
+		if (params.price) {
+			filters.push({
+				price: params.price,
+			});
+		}
+
+		if (params.color) {
+			filters.push({
+				color: {
+					[Op.iLike]: `%${params.color}%`,
+				},
+			});
+		}
+
+		const where = filters.length > 0 ? { [Op.and]: filters } : {};
+
+		const products = await Products.findAll({ where });
+		return products;
 	}
 
 	async getOne(id: number) {

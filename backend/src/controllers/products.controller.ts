@@ -5,6 +5,7 @@ import { zodParser } from "../utils/zodParser";
 import { createProductSchema, updateProductSchema } from "../schemas";
 import { BadRequestError } from "../errors/BadRequestError";
 import statusCodes from "../utils/statusCode";
+import { GetProductsRequest } from "../schemas/products/get-products-schema";
 
 export default class ProductsController {
 	constructor(private productsService: ProductsService) {}
@@ -66,7 +67,8 @@ export default class ProductsController {
 	};
 
 	getAll = async (req: Request, res: Response) => {
-		const products = await this.productsService.getAll();
+		const { query } = await zodParser(GetProductsRequest, req);
+		const products = await this.productsService.getAll(query);
 
 		return res.status(statusCodes.OK).json(products);
 	};
