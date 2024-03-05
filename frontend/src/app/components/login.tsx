@@ -16,9 +16,11 @@ import { Separator } from "@/components/ui/separator";
 import { LoginFormSchema, LoginFormValues } from "@/services/http";
 import useAuthStore from "@/stores/auth.store";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
 	const { toast } = useToast();
+	const router = useRouter();
 	const login = useAuthStore((state) => state.login);
 	const isLoading = useAuthStore((state) => state.isLoading);
 	const form = useForm<LoginFormValues>({
@@ -92,6 +94,9 @@ export default function Login() {
 					disabled={isLoading}
 					type="button"
 					variant="link"
+					onClick={() => {
+						router.push("/register");
+					}}
 				>
 					Sign up
 				</LoadingButton>
