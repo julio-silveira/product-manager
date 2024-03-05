@@ -1,0 +1,235 @@
+{
+	"info": {
+		"_postman_id": "c63e52ed-9d2e-44ab-8570-00025ea4082b",
+		"name": "ProductManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29596147"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "GetProduct",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["products"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"Xiaomi Redmi8\",\r\n   \"brand\": \"Xiaomi\",\r\n   \"model\": \"Redmi 8\",\r\n   \"price\":  10000,\r\n   \"color\": \"red\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["products"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateProduct2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"Xiaomi Redmi 9\",\r\n   \"details\": {\r\n       \"brand\": \"Xiaomi\",\r\n       \"model\": \"Redmi 9\",\r\n       \"color\": \"red\"\r\n   },\r\n   \"price\":  10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["products"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateProduct3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[  \r\n   {\r\n        \"name\": \"Xiaomi Redmi 9\",\r\n        \"brand\": \"Xiaomi\",\r\n        \"model\": \"Redmi 9\",\r\n        \"data\": [\r\n           {\r\n        \t  \"price\":  10000,\r\n        \t  \"color\": \"yellow\"\r\n           },\r\n          {\r\n        \t  \"price\":  10000,\r\n        \t  \"color\": \"green\"\r\n           }\r\n        ]\r\n   },\r\n   {\r\n        \"name\": \"Iphone 16 Pro\",\r\n        \"brand\": \"Iphone\",\r\n        \"model\": \"16 Pro\",\r\n        \"data\": [\r\n           {\r\n        \t  \"price\":  30000,\r\n        \t  \"color\": \"silver\"\r\n           },\r\n          {\r\n        \t  \"price\":  30100,\r\n        \t  \"color\": \"gold\"\r\n           }\r\n        ]\r\n        \r\n   }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["products"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"Xiaomi Redmi 8\",\r\n   \"brand\": \"Xiaomi\",\r\n   \"model\": \"Redmi 9\",\r\n   \"price\":  10000,\r\n   \"color\": \"red\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/:productId",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["products", ":productId"],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "99999"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "bearer-token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [""]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [""]
+					}
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["auth", "login"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"username\": \"admin\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["auth", "register"]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
