@@ -17,9 +17,9 @@ import { LoginFormSchema, LoginFormValues } from "@/services/http";
 import useAuthStore from "@/stores/auth.store";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function Login() {
-	const { toast } = useToast();
 	const router = useRouter();
 	const login = useAuthStore((state) => state.login);
 	const isLoading = useAuthStore((state) => state.isLoading);
@@ -33,12 +33,11 @@ export default function Login() {
 
 	async function onSubmit(data: LoginFormValues) {
 		const { message, success } = await login(data);
-
-		toast({
-			title: success ? "Success" : "Error",
-			description: message,
-			variant: success ? "default" : "destructive",
-		});
+		if (success) {
+			toast.success(message);
+		} else {
+			toast.error(message);
+		}
 	}
 
 	return (

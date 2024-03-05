@@ -11,15 +11,14 @@ import {
 	FormItem,
 	FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { RegisterFormSchema, RegisterFormValues } from "@/services/http";
 import useAuthStore from "@/stores/auth.store";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function RegisterForm() {
-	const { toast } = useToast();
 	const route = useRouter();
 	const register = useAuthStore((state) => state.register);
 	const isLoading = useAuthStore((state) => state.isLoading);
@@ -36,11 +35,11 @@ export default function RegisterForm() {
 	async function onSubmit(data: RegisterFormValues) {
 		const { message, success } = await register(data);
 
-		toast({
-			title: success ? "Success" : "Error",
-			description: message,
-			variant: success ? "default" : "destructive",
-		});
+		if (success) {
+			toast.success(message);
+		} else {
+			toast.error(message);
+		}
 	}
 
 	return (

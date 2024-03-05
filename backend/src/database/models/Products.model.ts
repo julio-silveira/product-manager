@@ -1,4 +1,4 @@
-import { Optional } from "sequelize";
+import { DECIMAL, Optional } from "sequelize";
 import { Table, Model, Column } from "sequelize-typescript";
 
 export interface ProductAtributes {
@@ -23,7 +23,9 @@ class Products extends Model<ProductAtributes, ProductCreationAttributes> {
 	@Column
 	model!: string;
 
-	@Column
+	@Column({
+		type: DECIMAL(10, 2),
+	})
 	price!: number;
 
 	@Column

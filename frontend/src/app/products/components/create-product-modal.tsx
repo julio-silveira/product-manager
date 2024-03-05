@@ -27,13 +27,12 @@ import {
 } from "@/components/ui/form";
 import { useState } from "react";
 import { productsApi } from "@/services";
-import { useToast } from "@/components/ui/use-toast";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import useProductStore from "@/stores/products.store";
+import { toast } from "react-toastify";
 
 export function CreateProductModal() {
-	const { toast } = useToast();
 	const fetchProducts = useProductStore((state) => state.fetchProducts);
 	const isLoadingProducts = useProductStore((state) => state.isLoading);
 	const form = useForm<CreateOrUpdateProductValues>({
@@ -50,12 +49,7 @@ export function CreateProductModal() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleRenderCloseToastError = () => {
-		toast({
-			title: "Error",
-			description:
-				"Please wait for the current action to complete before closing the dialog",
-			variant: "destructive",
-		});
+		toast.error("Please wait for the current action to finish");
 	};
 
 	const handleCloseDialog = () => {
@@ -81,15 +75,12 @@ export function CreateProductModal() {
 		setIsLoading(true);
 		const { message, success } = await productsApi.create(data);
 
-		toast({
-			title: success ? "Success" : "Error",
-			description: message,
-			variant: success ? "default" : "destructive",
-		});
-
 		if (success) {
+			toast.success(message);
 			fetchProducts();
 			handleCloseDialog();
+		} else {
+			toast.error(message);
 		}
 
 		setIsLoading(false);

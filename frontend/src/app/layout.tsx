@@ -36,7 +36,7 @@ export default function RootLayout({
 					>
 						{children}
 						<Toaster />
-						<ToastContainer theme="dark" />
+						<ToastContainer />
 					</ThemeProvider>
 				</body>
 			</html>

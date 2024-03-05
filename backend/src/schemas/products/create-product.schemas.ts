@@ -4,7 +4,7 @@ export const simpleProductSchema = z.object({
 	name: z.string(),
 	brand: z.string(),
 	model: z.string(),
-	price: z.number(),
+	price: z.coerce.number(),
 	color: z.string(),
 });
 
