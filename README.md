@@ -7,7 +7,7 @@ Bem-vindo ao product manager, uma aplicação completa para gerenciamento de pro
 Para acessar a aplicação use os links:
 
 - Frontend: https://product-manager-frontend.vercel.app/
-- Backend: api2-livid.vercel.app
+- Backend: https://api2-livid.vercel.app
 
 Para logar, voce pode criar uma nova conta ou usar a conta padrão
 
