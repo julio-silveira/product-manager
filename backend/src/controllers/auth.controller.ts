@@ -10,22 +10,22 @@ export class AuthController {
 
 	login = async (req: Request, res: Response) => {
 		const { body } = await zodParser(loginRequestSchema, req);
-		const token = await this.authService.login(body);
+		const user = await this.authService.login(body);
 
 		res.status(statusCodes.OK).json({
 			message: "Logged in successfully",
-			token,
+			...user,
 		});
 	};
 
 	register = async (req: Request, res: Response) => {
 		const { body } = await zodParser(createUserSchema, req);
 
-		const token = await this.authService.register(body);
+		const user = await this.authService.register(body);
 
 		res.status(statusCodes.CREATED).json({
 			message: "User created successfully",
-			token,
+			...user,
 		});
 	};
 }

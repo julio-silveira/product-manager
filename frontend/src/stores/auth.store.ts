@@ -1,4 +1,9 @@
-import { LoginFormValues, RegisterFormValues, authApi } from "@/services/http";
+import {
+	LoginFormValues,
+	RegisterFormValues,
+	UserInterface,
+	authApi,
+} from "@/services/http";
 import { createSessionCookies, getToken, removeSessionCookies } from "@/utils";
 import { AxiosError } from "axios";
 import { create } from "zustand";
@@ -7,6 +12,7 @@ type User = {
 	token: string | null;
 	isLoading: boolean;
 	isAuthenticated: boolean;
+	user: UserInterface | null;
 };
 
 type LoginResult = {
@@ -25,6 +31,7 @@ const useAuthStore = create<User & AuthActions>((set, get) => ({
 	token: null,
 	isLoading: false,
 	isAuthenticated: false,
+	user: null,
 	login: async (data) => {
 		set({ isLoading: true });
 		try {
@@ -36,7 +43,7 @@ const useAuthStore = create<User & AuthActions>((set, get) => ({
 				message,
 				success: true,
 			};
-			set({ isLoading: false });
+			set({ isLoading: false, user: result.user });
 			return loginResult;
 		} catch (error) {
 			removeSessionCookies();
@@ -45,7 +52,7 @@ const useAuthStore = create<User & AuthActions>((set, get) => ({
 				message: e.response?.data.message || "Failed to login",
 				success: false,
 			};
-			set({ isLoading: false });
+			set({ isLoading: false, user: null });
 			return result;
 		} finally {
 			get().checkAuth();
@@ -62,7 +69,7 @@ const useAuthStore = create<User & AuthActions>((set, get) => ({
 				message,
 				success: true,
 			};
-			set({ isLoading: false });
+			set({ isLoading: false, user: result.user });
 			return loginResult;
 		} catch (error) {
 			removeSessionCookies();
@@ -71,7 +78,7 @@ const useAuthStore = create<User & AuthActions>((set, get) => ({
 				message: e.response?.data.message || "Failed to register",
 				success: false,
 			};
-			set({ isLoading: false });
+			set({ isLoading: false, user: null });
 			return result;
 		} finally {
 			get().checkAuth();

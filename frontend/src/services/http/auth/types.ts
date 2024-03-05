@@ -14,6 +14,7 @@ export type LoginFormValues = z.infer<typeof LoginFormSchema>;
 export type LoginResult = {
 	message: string;
 	token: string;
+	user: UserInterface;
 };
 
 export const RegisterFormSchema = z
@@ -38,3 +39,9 @@ export const RegisterFormSchema = z
 	});
 
 export type RegisterFormValues = z.infer<typeof RegisterFormSchema>;
+
+export interface UserInterface {
+	id: number;
+	email: string;
+	username: string;
+}

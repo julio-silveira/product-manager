@@ -35,7 +35,14 @@ export default class AuthService {
 			username: user.username,
 		});
 
-		return token;
+		return {
+			token,
+			user: {
+				id: user.id,
+				email: user.email,
+				username: user.username,
+			},
+		};
 	}
 
 	async register(data: UserSchema) {
@@ -59,6 +66,13 @@ export default class AuthService {
 			username: user.username,
 		});
 
-		return token;
+		return {
+			token,
+			user: {
+				id: user.id,
+				email: user.email,
+				username: user.username,
+			},
+		};
 	}
 }

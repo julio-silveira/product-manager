@@ -17,6 +17,7 @@ export default function Header({ title }: HeaderProps) {
 	const logout = useAuthStore((state) => state.logout);
 	const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 	const checkAuth = useAuthStore((state) => state.checkAuth);
+	const user = useAuthStore((state) => state.user);
 
 	const router = useRouter();
 
@@ -31,7 +32,10 @@ export default function Header({ title }: HeaderProps) {
 		<header className="sticky top-0 z-40 border-b bg-background">
 			<div className="container flex h-16 items-center justify-between py-4">
 				<h1 className="text-2xl font-extrabold  lg:text-3xl">{title}</h1>
-				<div className="flex space-x-1">
+				<div className="flex gap-1 items-center ">
+					{user && (
+						<h1 className="text-lg font-semibold mr-2">{`User: ${user.username}`}</h1>
+					)}
 					<ThemeToggle />
 					<Button onClick={() => logout()} size="icon">
 						<ExitIcon />
