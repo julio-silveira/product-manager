@@ -31,10 +31,10 @@ export default function Header({ title }: HeaderProps) {
 	return (
 		<header className="sticky top-0 z-40 border-b bg-background">
 			<div className="container flex h-16 items-center justify-between py-4">
-				<h1 className="text-2xl font-extrabold  lg:text-3xl">{title}</h1>
+				<h1 className="text-1xl font-extrabold  lg:text-3xl">{title}</h1>
 				<div className="flex gap-1 items-center ">
 					{user && (
-						<h1 className="text-lg font-semibold mr-2">{`User: ${user.username}`}</h1>
+						<h1 className=" text-sm  lg:text-lg font-semibold mr-2">{`User: ${user.username}`}</h1>
 					)}
 					<ThemeToggle />
 					<Button onClick={() => logout()} size="icon">

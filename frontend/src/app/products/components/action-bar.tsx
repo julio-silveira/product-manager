@@ -40,7 +40,7 @@ export default function ActionBar() {
 						control={form.control}
 						name="name"
 						render={({ field }) => (
-							<FormItem className="flex flex-1">
+							<FormItem>
 								<FormControl>
 									<Input
 										placeholder="Search by name"
@@ -55,7 +55,7 @@ export default function ActionBar() {
 						control={form.control}
 						name="brand"
 						render={({ field }) => (
-							<FormItem className="flex flex-1">
+							<FormItem>
 								<FormControl>
 									<Input
 										placeholder="Search by brand"
@@ -71,7 +71,7 @@ export default function ActionBar() {
 						control={form.control}
 						name="model"
 						render={({ field }) => (
-							<FormItem className="flex flex-1">
+							<FormItem>
 								<FormControl>
 									<Input
 										placeholder="Search by model"
@@ -87,7 +87,7 @@ export default function ActionBar() {
 						control={form.control}
 						name="price"
 						render={({ field }) => (
-							<FormItem className="flex flex-1">
+							<FormItem>
 								<FormControl>
 									<Input
 										type="number"
@@ -104,7 +104,7 @@ export default function ActionBar() {
 						control={form.control}
 						name="color"
 						render={({ field }) => (
-							<FormItem className="flex flex-1">
+							<FormItem>
 								<FormControl>
 									<Input
 										placeholder="Search by color"
