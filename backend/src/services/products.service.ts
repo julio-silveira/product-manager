@@ -50,10 +50,19 @@ export default class ProductsService {
 			color: string;
 		}[],
 	) {
+		const mappedData = data.map((product) => ({
+			[Op.and]: {
+				brand: product.brand,
+				model: product.model,
+				color: product.color,
+			},
+		}));
+
 		const foundProducts = await Products.findAll({
-			where: { [Op.and]: data },
+			where: { [Op.or]: mappedData },
 		});
 
+		console.log(data);
 		const foundProductsKeys = foundProducts.map((product) => {
 			return `${product.brand}-${product.model}-${product.color}`;
 		});

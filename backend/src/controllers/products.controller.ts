@@ -16,6 +16,7 @@ export default class ProductsController {
 		const validatedProducts = await this.productsService.validateProducts(
 			parsedReq.body,
 		);
+		console.log(validatedProducts);
 
 		if (validatedProducts.newProducts.length === 0) {
 			const message =
